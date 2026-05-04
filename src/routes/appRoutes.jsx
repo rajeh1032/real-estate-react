@@ -1,4 +1,6 @@
 import { Navigate } from 'react-router-dom'
+import { PropertiesPage } from '../features/properties'
+import { PropertyDetailsPage } from '../features/property-details'
 import { MainLayout } from '../layouts/MainLayout'
 
 export const appRoutes = [
@@ -7,15 +9,15 @@ export const appRoutes = [
     children: [
       {
         path: '/',
-        element: null,
+        element: <Navigate to="/properties" replace />,
       },
       {
         path: '/properties',
-        element: null,
+        element: <PropertiesPage />,
       },
       {
         path: '/properties/:propertyId',
-        element: null,
+        element: <PropertyDetailsPage />,
       },
       {
         path: '/account',
@@ -29,6 +31,6 @@ export const appRoutes = [
   },
   {
     path: '*',
-    element: <Navigate to="/" replace />,
+    element: <Navigate to="/properties" replace />,
   },
 ]
