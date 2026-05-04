@@ -150,9 +150,9 @@ When adding a new feature, follow this order:
 
 ## Notes About The Current Codebase
 
-1. Several feature files currently exist as placeholders and are still empty.
-2. `src/routes/appRoutes.jsx` already defines the route paths, but many route elements are still `null`.
-3. The current app shell and theme flow are already set up and should be reused.
+1. The home landing screen is implemented under `src/features/home/` and is mounted at `/`.
+2. `src/layouts/MainLayout.jsx` owns the shared top navigation, footer, and theme controls.
+3. Some non-home feature files still exist as placeholders and should be completed in the same structure when needed.
 4. New feature work should complete the existing structure instead of inventing a new one.
 
 ## Copy-Paste Prompt For Any AI
@@ -170,6 +170,7 @@ You are working in an existing React project. Follow these rules strictly:
 - Put route definitions only in src/routes/appRoutes.jsx.
 - Keep router setup in src/routes/AppRouter.jsx.
 - Keep shared layout in src/layouts/MainLayout.jsx.
+- Keep the root route `/` mapped to the home landing page unless explicitly asked to change it.
 - Put shared global state only in Redux slices under src/redux/reducer.
 - Register any new slice in src/redux/rootReducer.js.
 - Keep Firebase setup in src/firebase and feature-specific data access inside feature services.
