@@ -37,7 +37,7 @@ function EyeIcon({ open }) {
   );
 }
 
-// ── Password Strength ────────────────────────────────────────────
+// Password Strength 
 function getStrength(val) {
   let score = 0;
   if (val.length >= 8) score++;
@@ -58,13 +58,8 @@ function getStrength(val) {
   };
 }
 
-// ══════════════════════════════════════════════════════════════════
-// MAIN COMPONENT
-// ══════════════════════════════════════════════════════════════════
 export default function RegisterPage() {
   const navigate = useNavigate();
-
-  // ── State ──────────────────────────────────────────────────────
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -79,7 +74,6 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // ── Handlers ──────────────────────────────────────────────────
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
@@ -398,4 +392,4 @@ export default function RegisterPage() {
       </div>
     </div>
   );
-}
+}''

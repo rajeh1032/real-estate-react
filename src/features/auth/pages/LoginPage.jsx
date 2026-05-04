@@ -1,9 +1,6 @@
-// src/features/auth/pages/LoginPage.jsx
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginWithEmail, loginWithGoogle, getAuthErrorMessage } from "../services/authService";
-
 function GoogleIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" className="shrink-0">
@@ -14,7 +11,6 @@ function GoogleIcon() {
     </svg>
   );
 }
-
 function AppleIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
@@ -48,8 +44,6 @@ export default function LoginPage() {
   const [loading, setLoading]       = useState(false);
   const [error, setError]           = useState("");
   const [showResend, setShowResend] = useState(false);
-
-  // ── Login بالإيميل + Firebase ──────────────────────────────
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -65,7 +59,7 @@ export default function LoginPage() {
     setLoading(false);
   }
 
-  // ── Login بـ Google + Firebase ─────────────────────────────
+  // Login with Google + Firebase
   async function handleGoogle() {
     setError("");
     setLoading(true);
@@ -77,7 +71,6 @@ export default function LoginPage() {
     }
     setLoading(false);
   }
-
   async function handleResend() {
     const { resendVerificationEmail } = await import("../services/authService");
     try {
@@ -88,7 +81,6 @@ export default function LoginPage() {
       setError("Please wait before resending.");
     }
   }
-
   return (
     <div className="flex h-screen w-full overflow-hidden">
 
@@ -126,7 +118,7 @@ export default function LoginPage() {
             </div>
           </div>
           <span className="text-[10px] tracking-wide text-white/25">
-            © 2024 Beaumont Architectural Editorial. All rights reserved.
+            © 2026 Beaumont Architectural Editorial. All rights reserved.
           </span>
         </div>
       </div>
