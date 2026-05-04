@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom'
+import { HomePage } from '../features/home'
 import { PropertiesPage } from '../features/properties'
 import { PropertyDetailsPage } from '../features/property-details'
 import { MainLayout } from '../layouts/MainLayout'
@@ -9,7 +10,7 @@ export const appRoutes = [
     children: [
       {
         path: '/',
-        element: <Navigate to="/properties" replace />,
+        element: <HomePage />,
       },
       {
         path: '/properties',
@@ -31,6 +32,6 @@ export const appRoutes = [
   },
   {
     path: '*',
-    element: <Navigate to="/properties" replace />,
+    element: <Navigate to="/" replace />,
   },
 ]
