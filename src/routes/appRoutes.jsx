@@ -1,6 +1,8 @@
-import { Navigate } from 'react-router-dom';
-import { MainLayout } from '../layouts/MainLayout';
-import PropertyDetails from '../features/property-details/pages/PropertyDetailsPage';
+import { Navigate } from 'react-router-dom'
+import { HomePage } from '../features/home'
+import { PropertiesPage } from '../features/properties'
+import { PropertyDetailsPage } from '../features/property-details'
+import { MainLayout } from '../layouts/MainLayout'
 
 export const appRoutes = [
   {
@@ -8,15 +10,15 @@ export const appRoutes = [
     children: [
       {
         path: '/',
-        element: <PropertyDetails />,
+        element: <HomePage />,
       },
       {
         path: '/properties',
-        element: null,
+        element: <PropertiesPage />,
       },
       {
         path: '/properties/:propertyId',
-        element: null,
+        element: <PropertyDetailsPage />,
       },
       {
         path: '/account',
