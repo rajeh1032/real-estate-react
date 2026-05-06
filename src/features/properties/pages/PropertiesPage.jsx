@@ -40,22 +40,30 @@ export function PropertiesPage() {
     let ignore = false
 
     async function loadProperties() {
+      console.log('[PropertiesPage] Starting to load properties...')
       setLoading(true)
       setError('')
 
       try {
+        console.log('[PropertiesPage] Calling getProperties()...')
         const data = await getProperties()
+        console.log('[PropertiesPage] Properties loaded successfully:', data)
+        console.log('[PropertiesPage] Number of properties:', data.length)
 
         if (!ignore) {
           setProperties(data)
         }
       } catch (loadError) {
+        console.error('[PropertiesPage] Error loading properties:', loadError)
+        console.error('[PropertiesPage] Error message:', loadError.message)
+        console.error('[PropertiesPage] Error stack:', loadError.stack)
         if (!ignore) {
           setError('Unable to load properties right now. Please try again shortly.')
         }
       } finally {
         if (!ignore) {
           setLoading(false)
+          console.log('[PropertiesPage] Loading finished')
         }
       }
     }

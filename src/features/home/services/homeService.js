@@ -1,68 +1,94 @@
-import { getProperties } from '../../properties/services/propertiesService'
+import { getProperties } from "../../properties/services/propertiesService";
 
 const homePageContent = {
   hero: {
-    title: ['Architecture', 'Meets Ambition.'],
+    title: ["Architecture", "Meets Ambition."],
     description:
       "Discover the world's most evocative living spaces. Our editorial selection prioritizes high-end design, sustainable luxury, and architectural permanence.",
-    searchPlaceholder: 'Search by city or architectural style...',
-    image: '/assets/home/hero-house.png',
+    searchPlaceholder: "Search by city or architectural style...",
+    image: "/assets/home/hero-house.png",
   },
   newsletter: {
-    title: 'Join the Inner Circle of Architectural Excellence',
+    title: "Join the Inner Circle of Architectural Excellence",
     description:
-      'Receive our weekly curated journal on modern heritage properties and market insights before they hit the public list.',
-    inputPlaceholder: 'Your email address',
-    image: '/assets/home/newsletter-pattern.png',
+      "Receive our weekly curated journal on modern heritage properties and market insights before they hit the public list.",
+    inputPlaceholder: "Your email address",
+    image: "/assets/home/newsletter-pattern.png",
   },
-}
+};
 
 export function getHomePageContent() {
-  return homePageContent
+  return homePageContent;
 }
 
 function formatPrice(price) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
     maximumFractionDigits: 0,
-  }).format(price)
+  }).format(price);
 }
 
 function mapPropertyToHomeCard(property, index) {
   const fallbackBadges = [
-    { label: 'New Arrival', tone: 'default' },
+    { label: "New Arrival", tone: "default" },
     null,
-    { label: "Editor's Choice", tone: 'accent' },
-  ]
+    { label: "Editor's Choice", tone: "accent" },
+  ];
 
-  const fallbackBadge = fallbackBadges[index] || null
-  const location = [property.location, property.city].filter(Boolean).join(', ')
+  const fallbackBadge = fallbackBadges[index] || null;
+  const location = [property.location, property.city]
+    .filter(Boolean)
+    .join(", ");
 
   return {
     id: property.id,
     title: property.title,
-    location: location || 'Location unavailable',
+    location: location || "Location unavailable",
     price: formatPrice(property.price),
-    image: property.image || '/assets/home/hero-house.png',
-    badge: property.isFeatured ? fallbackBadge?.label || 'Featured' : null,
-    badgeTone: fallbackBadge?.tone || 'default',
-    searchText: [property.title, property.location, property.city, property.type]
+    image: property.image || "/assets/home/hero-house.png",
+    badge: property.isFeatured ? fallbackBadge?.label || "Featured" : null,
+    badgeTone: fallbackBadge?.tone || "default",
+    searchText: [
+      property.title,
+      property.location,
+      property.city,
+      property.type,
+    ]
       .filter(Boolean)
-      .join(' ')
+      .join(" ")
       .toLowerCase(),
     stats: [
-      { label: `${property.bedrooms} Beds`, icon: 'bed' },
-      { label: `${property.bathrooms} Baths`, icon: 'bath' },
-      { label: `${property.area.toLocaleString('en-US')} sq ft`, icon: 'area' },
+      { label: `${property.bedrooms} Beds`, icon: "bed" },
+      { label: `${property.bathrooms} Baths`, icon: "bath" },
+      { label: `${property.area.toLocaleString("en-US")} sq ft`, icon: "area" },
     ],
-  }
+  };
 }
 
 export async function getHomeFeaturedProperties() {
-  const properties = await getProperties()
+  console.log("[homeService] Fetching featured properties...");
+  try {
+    console.log("[homeService] Calling getProperties()...");
+    const properties = await getProperties();
+    console.log("[homeService] All properties received:", properties);
+    console.log("[homeService] Total properties count:", properties.length);
 
-  return properties
-    .slice(0, 3)
-    .map(mapPropertyToHomeCard)
+    const featured = properties.slice(0, 3);
+    console.log("[homeService] Sliced to first 3 properties:", featured);
+
+    const mapped = featured.map(mapPropertyToHomeCard);
+    console.log("[homeService] Mapped to home cards:", mapped);
+
+    return mapped;
+  } catch (error) {
+    console.error(
+      "[homeService] ===== ERROR IN getHomeFeaturedProperties =====",
+    );
+    console.error("[homeService] Error object:", error);
+    console.error("[homeService] Error message:", error.message);
+    console.error("[homeService] Error stack:", error.stack);
+    console.error("[homeService] ===== ERROR END =====");
+    throw error;
+  }
 }

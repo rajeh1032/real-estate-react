@@ -65,6 +65,7 @@ export const PropertyDetailsPage = () => {
             price={property.price}
             currency={property.currency}
             location={property.location}
+            propertyId={propertyId}
           />
           <PropertyStats
             bedrooms={property.bedrooms}

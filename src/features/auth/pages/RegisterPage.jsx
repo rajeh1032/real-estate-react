@@ -97,6 +97,7 @@ export default function RegisterPage() {
         lastName: form.lastName,
         email: form.email,
         password: form.password,
+        phone: form.phone,
       });
 
       setSuccess("Account created! Please check your email to verify.");

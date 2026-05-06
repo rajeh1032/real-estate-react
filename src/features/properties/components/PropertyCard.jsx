@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { FavoriteButton } from '../../favorites'
 
 function formatPrice(price) {
   return new Intl.NumberFormat('en-US', {
@@ -29,11 +30,9 @@ export function PropertyCard({ property }) {
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
           />
 
-          <span className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition group-hover:bg-white/30">
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="m12 20-1.4-1.2C5.7 14.5 2.5 11.6 2.5 8A4.5 4.5 0 0 1 7 3.5c1.8 0 3.3.8 4.3 2.1A5.3 5.3 0 0 1 15.6 3.5 4.5 4.5 0 0 1 20.1 8c0 3.6-3.2 6.5-8.1 10.8L12 20Z" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
+          <div className="absolute right-4 top-4">
+            <FavoriteButton propertyId={property.id} />
+          </div>
 
           {property.isFeatured ? (
             <span className="absolute bottom-4 left-4 rounded-md bg-primary px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-primary-foreground">
