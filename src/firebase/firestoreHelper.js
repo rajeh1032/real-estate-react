@@ -9,8 +9,9 @@ import {
   setDoc,
   updateDoc,
   where,
-} from 'firebase/firestore';
-import { db } from './firebaseConfig';
+} from 'firebase/firestore'
+import { db } from './firebaseConfig'
+import { getFirestore } from 'firebase/firestore'
 
 export function getCollectionRef(collectionName) {
   return collection(db, collectionName);

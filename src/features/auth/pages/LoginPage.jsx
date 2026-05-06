@@ -51,7 +51,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await loginWithEmail(email, password);
-      navigate("/dashboard");
+      navigate("/home");
     } catch (err) {
       setError(getAuthErrorMessage(err));
       if (err.message === "EMAIL_NOT_VERIFIED") setShowResend(true);
@@ -65,7 +65,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await loginWithGoogle();
-      navigate("/dashboard");
+      navigate("/home");
     } catch (err) {
       setError(getAuthErrorMessage(err));
     }
@@ -83,8 +83,6 @@ export default function LoginPage() {
   }
   return (
     <div className="flex h-screen w-full overflow-hidden">
-
-      {/* ══ LEFT ══════════════════════════════════════════════ */}
       <div className="relative flex-[1.1] overflow-hidden bg-[#0d1117]">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -122,16 +120,12 @@ export default function LoginPage() {
           </span>
         </div>
       </div>
-
-      {/* ══ RIGHT ═════════════════════════════════════════════ */}
       <div className="flex w-[420px] shrink-0 items-center justify-center bg-white px-12 shadow-[-20px_0_60px_rgba(0,0,0,0.06)]">
         <div className="w-full">
           <h2 className="mb-2 font-serif text-3xl font-bold text-[#0d1117]">Welcome Back</h2>
           <p className="mb-7 text-sm leading-relaxed text-gray-400">
             Please enter your credentials to access your private concierge.
           </p>
-
-          {/* Error */}
           {error && (
             <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
               {error}
@@ -188,15 +182,11 @@ export default function LoginPage() {
               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
-
-          {/* Divider */}
           <div className="my-6 flex items-center gap-3">
             <span className="flex-1 border-t border-gray-200" />
             <span className="text-[11px] uppercase tracking-widest text-gray-400">or continue with</span>
             <span className="flex-1 border-t border-gray-200" />
           </div>
-
-          {/* Social */}
           <div className="flex gap-3">
             <button type="button" onClick={handleGoogle} disabled={loading}
               className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:opacity-60">
