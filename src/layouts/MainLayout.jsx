@@ -17,7 +17,12 @@ export function MainLayout() {
     return () => unsubscribe()
   }, [])
   const navLinkClassName = ({ isActive }) =>
-    isActive || isListingsRoute
+    isActive
+      ? 'border-b-2 border-primary pb-1.5 text-primary'
+      : 'pb-1.5 text-text-muted transition hover:text-text'
+
+  const listingsLinkClassName = ({ isActive }) =>
+    isActive || (isListingsRoute && location.pathname !== '/account')
       ? 'border-b-2 border-primary pb-1.5 text-primary'
       : 'pb-1.5 text-text-muted transition hover:text-text'
 
@@ -30,16 +35,19 @@ export function MainLayout() {
           </NavLink>
 
           <nav className="hidden items-center gap-8 text-sm font-semibold md:flex">
-            <NavLink to="/" className={navLinkClassName}>
+            <NavLink to="/" className={listingsLinkClassName}>
               Listings
+            </NavLink>
+            <NavLink to="/account" className={navLinkClassName}>
+              Profile
             </NavLink>
             <span className="pb-1.5 text-text-muted transition hover:text-text">Concierge</span>
             <span className="pb-1.5 text-text-muted transition hover:text-text">About</span>
           </nav>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            <button
-              type="button"
+            <NavLink
+              to="/account"
               className="hidden items-center gap-2 text-sm font-semibold text-text-muted transition hover:text-text sm:inline-flex"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
