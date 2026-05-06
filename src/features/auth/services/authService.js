@@ -14,7 +14,7 @@ import { auth } from "../../../firebase/firebaseConfig";
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
-// REGISTER WITH EMAIL
+// register with email
 export async function registerWithEmail({ firstName, lastName, email, password }) {
   try {
     console.log(" Starting registration for:", email);
