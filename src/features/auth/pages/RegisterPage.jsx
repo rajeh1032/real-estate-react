@@ -115,7 +115,7 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       await loginWithGoogle();
-      navigate("/dashboard");
+      navigate("/account");
     } catch (err) {
       setError(getAuthErrorMessage(err));
     } finally {

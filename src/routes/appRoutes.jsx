@@ -1,8 +1,12 @@
 import { Navigate } from 'react-router-dom'
+import { AccountPage } from '../features/account'
+import { LoginPage, RegisterPage } from '../features/auth'
 import { HomePage } from '../features/home'
 import { PropertiesPage } from '../features/properties'
 import { PropertyDetailsPage } from '../features/property-details'
 import { MainLayout } from '../layouts/MainLayout'
+
+
 
 export const appRoutes = [
   {
@@ -22,11 +26,15 @@ export const appRoutes = [
       },
       {
         path: '/account',
-        element: null,
+        element: <AccountPage />,
       },
       {
         path: '/login',
-        element: null,
+        element: <LoginPage />,
+      },
+      {
+        path: '/register',
+        element: <RegisterPage />,
       },
     ],
   },

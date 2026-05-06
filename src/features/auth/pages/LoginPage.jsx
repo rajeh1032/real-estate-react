@@ -51,7 +51,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await loginWithEmail(email, password);
-      navigate("/dashboard");
+      navigate("/account");
     } catch (err) {
       setError(getAuthErrorMessage(err));
       if (err.message === "EMAIL_NOT_VERIFIED") setShowResend(true);
@@ -65,7 +65,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await loginWithGoogle();
-      navigate("/dashboard");
+      navigate("/account");
     } catch (err) {
       setError(getAuthErrorMessage(err));
     }
