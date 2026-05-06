@@ -44,4 +44,4 @@ export const appRoutes = [
     path: '*',
     element: <Navigate to="/" replace />,
   },
-]
+];
