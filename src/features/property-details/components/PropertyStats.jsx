@@ -13,12 +13,12 @@ const StatItem = ({ icon: Icon, label, value }) => (
   </div>
 );
 
-const PropertyStats = () => {
+const PropertyStats = ({ bedrooms, cars, sq, bathrooms }) => {
   const stats = [
-    { icon: Bed, label: 'Bedrooms', value: '6' },
-    { icon: Bath, label: 'Bathrooms', value: '8.5' },
-    { icon: Maximize, label: 'Sq Ft', value: '9,420' },
-    { icon: Car, label: 'Cars', value: '4' },
+    { icon: Bed, label: 'Bedrooms', value: bedrooms },
+    { icon: Bath, label: 'Bathrooms', value: bathrooms },
+    { icon: Maximize, label: 'Sq Ft', value: `${sq}` },
+    { icon: Car, label: 'Cars', value: cars },
   ];
 
   return (

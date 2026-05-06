@@ -7,12 +7,12 @@ const InfoRow = ({ label, value }) => (
   </div>
 );
 
-const PropertyInfoTable = () => {
+const PropertyInfoTable = ({ conciergeDetails }) => {
   const details = [
-    { label: 'Listing ID', value: 'DH-82910' },
-    { label: 'Built In', value: '2023' },
-    { label: 'Property Tax', value: '$14,200 / yr' },
-    { label: 'HOA Fees', value: '$450 / mo' },
+    { label: 'Listing ID', value: conciergeDetails.listingId },
+    { label: 'Built In', value:`${ conciergeDetails.builtIn}` },
+    { label: 'Property Tax', value: `${conciergeDetails.propertyTax} / yr` },
+    { label: 'HOA Fees', value: `'${conciergeDetails.hoaFees} / mo'` },
   ];
 
   return (
