@@ -1,12 +1,29 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { ThemeToggle } from '../components/common/ThemeToggle'
+import { useAuth } from '../features/auth/context/useAuth'
+
+function getInitials(user) {
+  const source = user?.displayName || user?.email || 'Account'
+  return source
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join('')
+}
 
 export function MainLayout() {
   const location = useLocation()
+  const { user } = useAuth()
   const isListingsRoute = location.pathname === '/' || location.pathname.startsWith('/properties')
 
   const navLinkClassName = ({ isActive }) =>
-    isActive || isListingsRoute
+    isActive
+      ? 'border-b-2 border-primary pb-1.5 text-primary'
+      : 'pb-1.5 text-text-muted transition hover:text-text'
+
+  const listingsLinkClassName = ({ isActive }) =>
+    isActive || (isListingsRoute && location.pathname !== '/account')
       ? 'border-b-2 border-primary pb-1.5 text-primary'
       : 'pb-1.5 text-text-muted transition hover:text-text'
 
@@ -19,29 +36,45 @@ export function MainLayout() {
           </NavLink>
 
           <nav className="hidden items-center gap-8 text-sm font-semibold md:flex">
-            <NavLink to="/" className={navLinkClassName}>
+            <NavLink to="/" className={listingsLinkClassName}>
               Listings
+            </NavLink>
+            <NavLink to="/account" className={navLinkClassName}>
+              Profile
             </NavLink>
             <span className="pb-1.5 text-text-muted transition hover:text-text">Concierge</span>
             <span className="pb-1.5 text-text-muted transition hover:text-text">About</span>
           </nav>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            <button
-              type="button"
+            <NavLink
+              to="/account"
               className="hidden items-center gap-2 text-sm font-semibold text-text-muted transition hover:text-text sm:inline-flex"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <path d="m12 20-1.4-1.2C5.7 14.5 2.5 11.6 2.5 8A4.5 4.5 0 0 1 7 3.5c1.8 0 3.3.8 4.3 2.1A5.3 5.3 0 0 1 15.6 3.5 4.5 4.5 0 0 1 20.1 8c0 3.6-3.2 6.5-8.1 10.8L12 20Z" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               Favorites
-            </button>
-            <button
-              type="button"
-              className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+            </NavLink>
+            <NavLink
+              to={user ? '/account' : '/login'}
+              className={
+                user
+                  ? 'inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-semibold text-primary-foreground ring-1 ring-border transition hover:opacity-90'
+                  : 'rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90'
+              }
+              aria-label={user ? 'Open profile' : 'Sign in'}
             >
-              Sign In
-            </button>
+              {user ? (
+                user.photoURL ? (
+                  <img src={user.photoURL} alt="" className="h-full w-full object-cover" />
+                ) : (
+                  getInitials(user)
+                )
+              ) : (
+                'Sign In'
+              )}
+            </NavLink>
             <ThemeToggle />
           </div>
         </div>
