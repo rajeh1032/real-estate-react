@@ -1,22 +1,21 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { ThemeToggle } from '../components/common/ThemeToggle'
-import { useAuth } from '../features/auth/context/useAuth'
-
-function getInitials(user) {
-  const source = user?.displayName || user?.email || 'Account'
-  return source
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((part) => part.charAt(0).toUpperCase())
-    .join('')
-}
-
+import { useEffect, useState } from 'react'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 export function MainLayout() {
   const location = useLocation()
-  const { user } = useAuth()
+  const navigate = useNavigate()
   const isListingsRoute = location.pathname === '/' || location.pathname.startsWith('/properties')
-
+   const [user, setUser] = useState(null)
+  const [authLoading, setAuthLoading] = useState(true)
+  useEffect(() => {
+    const auth = getAuth()
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser)
+      setAuthLoading(false)
+    })
+    return () => unsubscribe()
+  }, [])
   const navLinkClassName = ({ isActive }) =>
     isActive
       ? 'border-b-2 border-primary pb-1.5 text-primary'
@@ -55,26 +54,26 @@ export function MainLayout() {
                 <path d="m12 20-1.4-1.2C5.7 14.5 2.5 11.6 2.5 8A4.5 4.5 0 0 1 7 3.5c1.8 0 3.3.8 4.3 2.1A5.3 5.3 0 0 1 15.6 3.5 4.5 4.5 0 0 1 20.1 8c0 3.6-3.2 6.5-8.1 10.8L12 20Z" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               Favorites
-            </NavLink>
-            <NavLink
-              to={user ? '/account' : '/login'}
-              className={
-                user
-                  ? 'inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-semibold text-primary-foreground ring-1 ring-border transition hover:opacity-90'
-                  : 'rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90'
-              }
-              aria-label={user ? 'Open profile' : 'Sign in'}
-            >
-              {user ? (
-                user.photoURL ? (
-                  <img src={user.photoURL} alt="" className="h-full w-full object-cover" />
-                ) : (
-                  getInitials(user)
-                )
-              ) : (
-                'Sign In'
-              )}
-            </NavLink>
+            </button>
+          {!authLoading && (
+  user ? (
+    <button
+      type="button"
+      onClick={() => signOut(getAuth()).then(() => navigate('/login'))}
+      className="rounded-lg border border-primary px-5 py-2 text-sm font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground"
+    >
+      Sign Out
+    </button>
+  ) : (
+    <button
+      type="button"
+      onClick={() => navigate('/login')}
+      className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+    >
+      Sign In
+    </button>
+  )
+)}
             <ThemeToggle />
           </div>
         </div>

@@ -125,12 +125,10 @@ export default function RegisterPage() {
 
   const strength = getStrength(form.password);
 
-  // ── Render ────────────────────────────────────────────────────
+  // Render 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      
-      {/* ══ LEFT PANEL ══════════════════════════════════════════ */}
-      <div className="relative flex-[1.1] overflow-hidden bg-[#0d1117]">
+            <div className="relative flex-[1.1] overflow-hidden bg-[#0d1117]">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -249,7 +247,6 @@ export default function RegisterPage() {
                   name="firstName"
                   value={form.firstName}
                   onChange={handleChange}
-                  placeholder="John"
                   required
                   className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-[#0d1117] outline-none transition focus:border-[#0d1117] focus:bg-white"
                 />
@@ -263,7 +260,6 @@ export default function RegisterPage() {
                   name="lastName"
                   value={form.lastName}
                   onChange={handleChange}
-                  placeholder="Doe"
                   required
                   className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-[#0d1117] outline-none transition focus:border-[#0d1117] focus:bg-white"
                 />
