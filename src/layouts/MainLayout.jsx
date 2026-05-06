@@ -1,10 +1,21 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { ThemeToggle } from '../components/common/ThemeToggle'
-
+import { useEffect, useState } from 'react'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 export function MainLayout() {
   const location = useLocation()
+  const navigate = useNavigate()
   const isListingsRoute = location.pathname === '/' || location.pathname.startsWith('/properties')
-
+   const [user, setUser] = useState(null)
+  const [authLoading, setAuthLoading] = useState(true)
+  useEffect(() => {
+    const auth = getAuth()
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser)
+      setAuthLoading(false)
+    })
+    return () => unsubscribe()
+  }, [])
   const navLinkClassName = ({ isActive }) =>
     isActive || isListingsRoute
       ? 'border-b-2 border-primary pb-1.5 text-primary'
@@ -36,12 +47,25 @@ export function MainLayout() {
               </svg>
               Favorites
             </button>
-            <button
-              type="button"
-              className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
-            >
-              Sign In
-            </button>
+          {!authLoading && (
+  user ? (
+    <button
+      type="button"
+      onClick={() => signOut(getAuth()).then(() => navigate('/login'))}
+      className="rounded-lg border border-primary px-5 py-2 text-sm font-semibold text-primary transition hover:bg-primary hover:text-primary-foreground"
+    >
+      Sign Out
+    </button>
+  ) : (
+    <button
+      type="button"
+      onClick={() => navigate('/login')}
+      className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+    >
+      Sign In
+    </button>
+  )
+)}
             <ThemeToggle />
           </div>
         </div>
