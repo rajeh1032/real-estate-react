@@ -67,28 +67,16 @@ function mapPropertyToHomeCard(property, index) {
 }
 
 export async function getHomeFeaturedProperties() {
-  console.log("[homeService] Fetching featured properties...");
   try {
-    console.log("[homeService] Calling getProperties()...");
     const properties = await getProperties();
-    console.log("[homeService] All properties received:", properties);
-    console.log("[homeService] Total properties count:", properties.length);
 
     const featured = properties.slice(0, 3);
-    console.log("[homeService] Sliced to first 3 properties:", featured);
 
     const mapped = featured.map(mapPropertyToHomeCard);
-    console.log("[homeService] Mapped to home cards:", mapped);
 
     return mapped;
   } catch (error) {
-    console.error(
-      "[homeService] ===== ERROR IN getHomeFeaturedProperties =====",
-    );
-    console.error("[homeService] Error object:", error);
-    console.error("[homeService] Error message:", error.message);
-    console.error("[homeService] Error stack:", error.stack);
-    console.error("[homeService] ===== ERROR END =====");
+   
     throw error;
   }
 }

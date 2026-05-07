@@ -5,7 +5,6 @@ export function NewsletterSection({ content }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    // Handle newsletter subscription
     console.log('Newsletter subscription:', email)
   }
 

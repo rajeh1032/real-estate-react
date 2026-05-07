@@ -42,17 +42,10 @@ function normalizeProperty(property) {
 }
 
 export async function getProperties() {
-  console.log("[propertiesService] Fetching properties from Firestore...");
   try {
     const properties = await getAllDocuments(PROPERTIES_COLLECTION);
-    console.log(
-      "[propertiesService] Raw properties from Firestore:",
-      properties,
-    );
-    console.log(
-      "[propertiesService] Number of raw properties:",
-      properties.length,
-    );
+ 
+   
 
     const normalized = properties.map(normalizeProperty).sort((left, right) => {
       if (left.isFeatured !== right.isFeatured) {
@@ -62,10 +55,7 @@ export async function getProperties() {
       return right.price - left.price;
     });
 
-    console.log(
-      "[propertiesService] Normalized and sorted properties:",
-      normalized,
-    );
+   
     return normalized;
   } catch (error) {
     console.error("[propertiesService] Error in getProperties:", error);
